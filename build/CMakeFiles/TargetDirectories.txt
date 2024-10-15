@@ -1,3 +1,0 @@
-/Users/jaekwan/WorkSpace/Project/project-CadifyCpp/build/CMakeFiles/CadifyCpp.dir
-/Users/jaekwan/WorkSpace/Project/project-CadifyCpp/build/CMakeFiles/edit_cache.dir
-/Users/jaekwan/WorkSpace/Project/project-CadifyCpp/build/CMakeFiles/rebuild_cache.dir
