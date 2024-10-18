@@ -175,9 +175,64 @@
 //     std::cout << "변환 후 법선 벡터: (" << finalNormal.X() << ", " << finalNormal.Y() << ", " << finalNormal.Z() << ")" << std::endl;
 // }
 
-// // int main() {
-// //     std::string inputFilePath = "/Users/jaekwan/WorkSpace/Study/OCCT/study-opencascade/testFile/basic.step";
-// //     std::string outputFilePath = "transformed_output.step";
-// //     processStepFile(inputFilePath, outputFilePath);
-// //     return 0;
-// // }
+// int main() {
+//     std::string inputFilePath = "/Users/jaekwan/WorkSpace/Study/OCCT/study-opencascade/testFile/basic.step";
+//     std::string outputFilePath = "transformed_output.step";
+//     processStepFile(inputFilePath, outputFilePath);
+//     return 0;
+// }
+
+
+
+
+// ------------------------------------------------------------
+// #include <STEPControl_Reader.hxx>
+// #include <STEPControl_Writer.hxx>
+// #include <TopoDS_Shape.hxx>
+// #include <TopExp_Explorer.hxx>
+// #include <TopoDS.hxx>
+// #include <TopoDS_Face.hxx>
+// #include <TopoDS_Vertex.hxx>
+// #include <BRep_Tool.hxx>
+// #include <Geom_Surface.hxx>
+// #include <BRepAdaptor_Surface.hxx>
+// #include <gp_Pnt.hxx>
+// #include <gp_Vec.hxx>
+// #include <gp_Trsf.hxx>
+// #include <gp_Ax1.hxx>
+// #include <gp_Dir.hxx>
+// #include <BRepBuilderAPI_Transform.hxx>
+// #include <BRepGProp.hxx>
+// #include <GProp_GProps.hxx>
+// #include <Precision.hxx>
+// #include <iostream>
+// #include <vector>
+// #include <cmath>
+// #include <iomanip>
+// #include <set>
+// #include "lib/include/io-function.h"
+// #include "lib/include/face-function.h"
+// #include "lib/include/calc-function.h"
+// #include "lib/include/point-function.h"
+// #include "lib/include/align-function.h"
+
+// int main()
+// {
+//     std::string fileName = "basic.step";
+//     std::string outputFilePath = "result.step";
+//     // 파일 읽기 & 쓰기
+//     // return : shape 객체
+//     TopoDS_Shape shape = processStepFile(fileName, outputFilePath);
+// }
+
+// // TopoDS_Face 객체에 해당하는 모든 2D로 구성된 면(3D모델의 2D구성요소)를 step파일로 내보내기
+// // int objectIndex = 1;
+// // std::string filename = "part" + std::to_string(objectIndex) + ".step";
+// //         saveObjectToStep(face, filename);
+// //         objectIndex++;
+
+// // vector 배열에 저장된 복수의 면적 출력
+// // for(int i = 0; i < largestFaces.size(); i++){
+// //         TopoDS_Face& face = largestFaces[i];
+// //         std::cout << calculateFaceArea(face) << std::endl;
+// //     }
