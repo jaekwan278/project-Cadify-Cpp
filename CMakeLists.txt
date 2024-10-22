@@ -13,6 +13,7 @@ set(SOURCES
      lib/src/calc-function.cpp
      lib/src/point-function.cpp
      lib/src/align-function.cpp
+     lib/src/aag-function.cpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/include)

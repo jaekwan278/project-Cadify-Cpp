@@ -1,7 +1,7 @@
 #include "face-function.h"
 
 // 가장 큰 넓이를 가지고 있는 한 쌍의 면을 담은 배열 리턴
-std::vector<TopoDS_Face> findLargestFaces(TopoDS_Shape &shape)
+std::vector<TopoDS_Face> findLargestFaces(TopoDS_Shape& shape)
 {
     // 가장 큰 넓이를 가지고 있는 복수의 면을 담을 배열
     std::vector<TopoDS_Face> largestFaces;
@@ -31,9 +31,20 @@ std::vector<TopoDS_Face> findLargestFaces(TopoDS_Shape &shape)
     return largestFaces;
 }
 
-double calculateFaceArea(const TopoDS_Face &face)
+double calculateFaceArea(const TopoDS_Face& face)
 {
     GProp_GProps props;
     BRepGProp::SurfaceProperties(face, props);
     return props.Mass();
+}
+
+std::vector<TopoDS_Face> findAllFaces(TopoDS_Shape& shape){
+    std::vector<TopoDS_Face> allFaces;
+
+    for(TopExp_Explorer faceExplorer(shape, TopAbs_FACE); faceExplorer.More(); faceExplorer.Next()){
+        TopoDS_Face face = TopoDS::Face(faceExplorer.Current());
+        allFaces.push_back(face);
+    }
+
+    return allFaces;
 }

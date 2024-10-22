@@ -1,6 +1,6 @@
 #include "io-function.h"
 
-TopoDS_Shape processStepFile(const std::string &inputFileName)
+TopoDS_Shape openStepFile(const std::string &inputFileName)
 {
     STEPControl_Reader reader;
 
@@ -16,16 +16,28 @@ TopoDS_Shape processStepFile(const std::string &inputFileName)
     return shape;
 }
 
-void saveObjectToStep(const TopoDS_Shape &shape, const std::string &filename)
+void saveObjectToStep(const TopoDS_Shape &shape, const std::string &fileName)
 {
     STEPControl_Writer writer;
     writer.Transfer(shape, STEPControl_AsIs);
-    if (writer.Write(filename.c_str()))
+    if (writer.Write(fileName.c_str()))
     {
-        std::cout << "Save face to " << filename << std::endl;
+        std::cout << "Save face to " << fileName << std::endl;
     }
     else
     {
-        std::cerr << "Error saving face to " << filename << std::endl;
+        std::cerr << "Error saving face to " << fileName << std::endl;
+    }
+}
+
+void saveObjectToStep(TopoDS_Face &face, const std::string &fileName, int& count){
+    STEPControl_Writer writer;
+    writer.Transfer(face, STEPControl_AsIs);
+    if(writer.Write(fileName.c_str() + count)){
+        std::cout << "Save face to " << fileName << count << std::endl;
+    }
+    else
+    {
+        std::cerr << "Error saving face to " << fileName << count << std::endl;
     }
 }

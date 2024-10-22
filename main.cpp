@@ -3,11 +3,12 @@
 #include "lib/include/face-function.h"
 #include "lib/include/io-function.h"
 #include "lib/include/point-function.h"
+#include "lib/include/aag-function.h"
 #include <set>
 
 TopoDS_Shape process(const std::string& fileName, const std::string& outputFilePath){
 
-    TopoDS_Shape shape = processStepFile(fileName);
+    TopoDS_Shape shape = openStepFile(fileName);
     // 최대 넓이를 가진 하나 이상의 면을 담는 배열
     std::vector<TopoDS_Face> largestFaces = findLargestFaces(shape);
     // 최대 넓이를 가진 면들의 좌표를 담는 배열 & 중복 제거 & ( x >> y >> z )순으로 비교
@@ -38,27 +39,39 @@ TopoDS_Shape process(const std::string& fileName, const std::string& outputFileP
 
 int main()
 {
-    const std::string fileName = "1.5T.step";
-    const std::string outputFilePath = "1.5T-result.step";
+    const std::string fileName = "hole.step";
+    const std::string outputFilePath = "basic-result.step";
 
-    TopoDS_Shape shape = process(fileName, outputFilePath);
+    TopoDS_Shape shape = openStepFile(fileName);
 
-    std::vector<TopoDS_Face> largestFaces = findLargestFaces(shape);
-    // 최대 넓이를 가진 면들의 좌표를 담는 배열 & 중복 제거 & ( x >> y >> z )순으로 비교
-    std::set<Point> largestFacesPnts;
-    // 최대 넓이를 가진 면들의 좌표를 모두 저장
-    for(const TopoDS_Face& face : largestFaces){
-        std::vector<gp_Pnt> pnts = getFaceVertices(face);
-        for(const gp_Pnt& pnt : pnts){
-            const gp_Pnt roundedPnt = roundTwoDecimal(pnt);
-            largestFacesPnts.insert(Point{roundedPnt});
-        }
-    }
-    // 중복제거된 오름차순의 좌표 출력
-    for(const Point& pnt : largestFacesPnts){
-        std::cout << std::fixed << std::setprecision(2) << 
-                "Vertix : x = " << pnt.point.X() << ", y = " << pnt.point.Y() << ", z = " << pnt.point.Z() << std::endl;
-    }
+    std::vector<TopoDS_Face> faces = findAllFaces(shape);
 
-    saveObjectToStep(shape, outputFilePath);
+    AAGAnalyzer aagAnalyzer(faces);
+
+    aagAnalyzer.printAAG();
 }
+
+    // 가장 큰 면 기준 가장 작은 좌표를 0,0,0 으로 이동.
+    // const std::string fileName = "1.5T.step";
+    // const std::string outputFilePath = "1.5T-result.step";
+
+    // TopoDS_Shape shape = process(fileName, outputFilePath);
+
+    // std::vector<TopoDS_Face> largestFaces = findLargestFaces(shape);
+    // // 최대 넓이를 가진 면들의 좌표를 담는 배열 & 중복 제거 & ( x >> y >> z )순으로 비교
+    // std::set<Point> largestFacesPnts;
+    // // 최대 넓이를 가진 면들의 좌표를 모두 저장
+    // for(const TopoDS_Face& face : largestFaces){
+    //     std::vector<gp_Pnt> pnts = getFaceVertices(face);
+    //     for(const gp_Pnt& pnt : pnts){
+    //         const gp_Pnt roundedPnt = roundTwoDecimal(pnt);
+    //         largestFacesPnts.insert(Point{roundedPnt});
+    //     }
+    // }
+    // // 중복제거된 오름차순의 좌표 출력
+    // for(const Point& pnt : largestFacesPnts){
+    //     std::cout << std::fixed << std::setprecision(2) << 
+    //             "Vertix : x = " << pnt.point.X() << ", y = " << pnt.point.Y() << ", z = " << pnt.point.Z() << std::endl;
+    // }
+
+    // saveObjectToStep(shape, outputFilePath);
